@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script src="ledger-0.1.0.js"></script>
+  </head>
+  <body>
+    <div id="result">Pending result</div>
+    <p>
+    <input type="button" onclick="Ledger.isAppAvailable()" value="Is Ledger app available?">
+    <p>
+    <input type="button" onclick="Ledger.launchApp()" value="Launch Ledger app">
+    <p>
+    <input type="button" onclick="Ledger.hasSession()" value="Is Nano session available?">
+    <p>
+    <input type="button" onclick="Ledger.sendPayment('19QM7ToSsi7N9zsZRdRTLcGZVspXQjQUY5',0.001)" value="Send payment">
+    <p>
+    <input type="text" id="bitid">
+    <input type="button" onclick="Ledger.bitid(document.getElementById('bitid').value)" value="BitID test">
+    <script>
+      function callback(event) {
+        document.getElementById("result").innerHTML = JSON.stringify(event.response);
+      };
+      Ledger.init({ callback: callback });
+    </script>
+  </body>
+</html>
