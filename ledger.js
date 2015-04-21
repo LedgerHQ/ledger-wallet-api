@@ -20,6 +20,12 @@ var Ledger = {
   sendPayment: function(address, amount) {
     Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
   },
+  getXPubKey: function(path) {
+    Ledger._messageAfterSession({ command:"get_xpubkey", path:path })
+  },
+  signP2SH: function(inputs, scripts, outputs_number, outputs_script, paths) {
+    Ledger._messageAfterSession({ command:"sign_p2sh", inputs: inputs, scripts: scripts, outputs_number: outputs_number, outputs_script: outputs_script, paths: paths })
+  },
   _createProxy: function() {
     var div = document.createElement('div');
     div.id = 'ledger-iframe';
@@ -27,13 +33,13 @@ var Ledger = {
     div.style.left = '-5000px'
     document.body.appendChild(div);
     Ledger._iframe = document.createElement('iframe');
-    if (Ledger._options.debug) {
-      url = "//dev.ledgerwallet.com:3000/proxy";
-    } else {
-      url = "//www.ledgerwallet.com/proxy";
-    }
-    Ledger._iframe.setAttribute("src", url);
+    Ledger._iframe.setAttribute("src", "https://www.ledgerwallet.com/proxy");
     document.getElementById('ledger-iframe').appendChild(Ledger._iframe);
+    Ledger._iframe.addEventListener("load", function() {
+        if (Ledger._after_session) {
+          Ledger.launchApp(); 
+        }
+      }, false);
   },
   _message: function(data) {
     Ledger._iframe.contentWindow.postMessage(data, "*");

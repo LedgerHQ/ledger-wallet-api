@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="ledger-0.1.0.js"></script>
+    <script src="ledger.js"></script>
   </head>
   <body>
     <div id="result">Pending result</div>
@@ -14,10 +14,31 @@
     <input type="button" onclick="Ledger.sendPayment('19QM7ToSsi7N9zsZRdRTLcGZVspXQjQUY5',0.001)" value="Send payment">
     <p>
     <input type="text" id="bitid">
-    <input type="button" onclick="Ledger.bitid(document.getElementById('bitid').value)" value="BitID test">
+    <input type="button" onclick="Ledger.bitid(document.getElementById('bitid').value)" value="BitID login">
+    <p>
+    <input type="text" id="path">
+    <input type="button" onclick="Ledger.getXPubKey(document.getElementById('path').value)" value="Get xpubkey">
+    <p>
+    <input type="button" onclick="p2sh()" value="Sign P2SH">
     <script>
       function callback(event) {
         document.getElementById("result").innerHTML = JSON.stringify(event.response);
+      };
+      function p2sh() {
+        var inputs = [
+          [ "71f97fa2a21486ecd99674a8ae068d92acd2e9db49c199473be39984e6cbe0f6", "00000000" ],
+          [ "171e6a969ff196a2cfaaba4780c292e33fc297672a065cc5c5c684727cf9e3ba", "00000001" ]
+        ];
+        var scripts = [ 
+          "52210289b4a3ad52a919abd2bdd6920d8a6879b1e788c38aa76f0440a6f32a9f1996d02103a3393b1439d1693b063482c04bd40142db97bdf139eedd1b51ffb7070a37eac321030b9a409a1e476b0d5d17b804fcdb81cf30f9b99c6f3ae1178206e08bc500639853ae",
+          "522102afe2165371442437b86089a17e8d1c26d127e3723b19f568e9c11e326946111521032d139518b16c112d5f1a52157f1468c0b7a570c41673debee8cd2e53eb084df12103b13fe78b0320ceb77795c87ed72069f12edf64169d15f8f9827f0bb4fdbe760f53ae"
+        ];    
+        var paths = [
+          "44'/0'/0'/0/0/0/1",
+          "44'/0'/0'/0/0/0/2",
+        ];
+        var outputs_script = "40420f00000000001976a91496986c2703c6b311c884bf916d28621bc61e8b7a88acdc0c03000000000017a914ddf0a9f3e0c9822feef702d36dee6c0bd2bf7c6d87"
+        Ledger.signP2SH(inputs, scripts, 2, outputs_script, paths);
       };
       Ledger.init({ callback: callback });
     </script>
