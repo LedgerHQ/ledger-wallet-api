@@ -5,26 +5,17 @@ var Ledger = {
     Ledger._createProxy();
     addEventListener("message", Ledger._callback, false);
   },
-  isAppAvailable: function() {
-    Ledger._message({ command:"ping" });
-  },
   launchApp: function() {
     Ledger._message({ command:"launch" });
   },
   hasSession: function() {
     Ledger._message({ command:"has_session" });
   },
-  bitid: function(uri, silent) {
-    Ledger._messageAfterSession({ command:"bitid", uri:uri, silent:silent })
+  coinkiteGetXPubKey: function(index) {
+    Ledger._messageAfterSession({ command:"coinkite_get_xpubkey", index:index })
   },
-  sendPayment: function(address, amount) {
-    Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
-  },
-  getXPubKey: function(path) {
-    Ledger._messageAfterSession({ command:"get_xpubkey", path:path })
-  },
-  signP2SH: function(inputs, scripts, outputs_number, outputs_script, paths) {
-    Ledger._messageAfterSession({ command:"sign_p2sh", inputs: inputs, scripts: scripts, outputs_number: outputs_number, outputs_script: outputs_script, paths: paths })
+  coinkiteSignJSON: function(json) {
+    Ledger._messageAfterSession({ command:"coinkite_sign_json", json:json })
   },
   _createProxy: function() {
     var div = document.createElement('div');
