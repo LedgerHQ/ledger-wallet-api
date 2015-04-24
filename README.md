@@ -429,3 +429,12 @@ If user confirms the authentication request:
    "uri":"bitid://bitid.bitcoin.blue/callback?x=5f38d0fb45b25015&u=1"
 }
 ```
+
+
+## Roadmap
+
+We plan to add other API calls and new functionalities.
+
+- `Ledger.getNewAddresses(account_id, n)`: returns `n` new addresses for account `account_id` to receive payments
+
+If you would like to see other API calls for your specific needs, please open an issue with a description of what you would like and we'll discuss adding this functionality on our roadmap.
