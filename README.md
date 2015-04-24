@@ -6,6 +6,11 @@ Each call to the API will trigger an UI response to the Chrome app, where the us
 
 The API requires the version 1.2.0 of the Ledger Chrome application.
 
+## Demonstration
+
+A very simple demonstration of the API calls is available here  
+https://www.ledgerwallet.com/api/demo.html
+
 ## Usage
 
 First, you need to insert the `ledger.js` file in your page:
