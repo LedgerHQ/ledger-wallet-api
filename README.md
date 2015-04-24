@@ -25,6 +25,17 @@ This will create an invisible iframe on the `ledgerwallet.com` domain, acting as
 
 ## API calls
 
+1. [isAppAvailable()](#ledgerisappavailable)
+2. [launchApp()](#ledgerlaunchapp)
+3. [hasSession()](#ledgerhassession)
+4. [getAccounts()](#ledgergetaccounts)
+5. [getOperations(account_id)](#ledgergetoperationsaccount_id)
+6. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
+7. [getXPubKey(path)](#ledgergetxpubkeypath)
+8. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
+
+===
+
 ##### `Ledger.isAppAvailable()`
 
 Check if the Ledger Chrome app is installed.
@@ -52,6 +63,8 @@ If the Ledger Chrome app is not available, the returned `event` will be `undefin
 
 > All following API calls will return `undefined` if the Ledger Chrome app is not installed. In the next examples, it is taken for granted that the Chrome app is installed, and therefore we are not checking the existence of `event.response`.
 
+===
+
 ##### `Ledger.launchApp()`
 
 Launch the Ledger Chrome application. 
@@ -74,6 +87,8 @@ It will always return the following response after having launched the app:
 ```
 
 > You usually don't have to use this call, as it will be used by other calls automatically.
+
+===
 
 ##### `Ledger.hasSession()`
 
@@ -107,6 +122,8 @@ If session is not ready:
 ```
 
 > You normally don't need to use this call. All following API calls require the wallet to be ready. They will therefore automatically check that app has been launched and wait for the session to be ready by pooling the `hasSession()` call.
+
+===
 
 ##### `Ledger.getAccounts()`
 
@@ -155,6 +172,8 @@ If user grants the request:
 Use the value of `id` for `account_id` in `getOperations`.
 
 > All balances are in satoshis.
+
+===
 
 ##### `Ledger.getOperations(account_id)`
 
@@ -209,6 +228,8 @@ If user grants the request:
 }
 ```
 
+===
+
 ##### `Ledger.sendPayment(address, amount)`
 
 Request the Chrome app to send a payment of `amount` BTC to `address`.
@@ -251,6 +272,8 @@ If user confirms the payment:
 
 > There is no need to push the raw transaction to the Bitcoin network as it has already been done by the Chrome app.
 
+===
+
 ##### `Ledger.getXPubKey(path)`
 
 Request the extended public key for `path`.
@@ -285,6 +308,8 @@ If user confirms the export request:
    "xpubkey":"xpub6D52jcEfKA4cGeGcVC9pwG37Ju8pUMQrhptw82QVHRSAGBELE5uCee7Qq8RJUqQVyxfJfwbJKYyqyFhc2Xg8cJyN11kRvnAaWcACXP6K0zv"
 }
 ```
+
+===
 
 ##### `Ledger.signP2SH(inputs, scripts, outputs_number, outputs_script, paths)`
 
