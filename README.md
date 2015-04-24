@@ -9,19 +9,25 @@ The API requires the version 1.2.0 of the Ledger Chrome application.
 ## Usage
 
 First, you need to insert the `ledger.js` file in your page:
+
 ```html
 <head>
   <script src="ledger.js"></script>
 </head>
 ```
+
 Initialization of the `Ledger` object is as follow:
+
 ```javascript
 function callback(event) {
   console.log(event.response);
 };
 Ledger.init({ callback: callback });
 ```
+
 This will create an invisible iframe on the `ledgerwallet.com` domain, acting as a proxy between your web page and the Ledger Chrome app. Each time you request an API call, a message will be sent to the Chrome app and the response will be sent to the `callback` function.
+
+All calls are asynchronous, and you are not garanteed to get a callback (for instance, if the user kills the Chrome app). If you are using a button to trigger a call, it is recommended to disable the action button for a few seconds using for instance `setTimeout(enableButtonFunction, 4000)`.
 
 ## API calls
 
@@ -33,6 +39,7 @@ This will create an invisible iframe on the `ledgerwallet.com` domain, acting as
 6. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
 7. [getXPubKey(path)](#ledgergetxpubkeypath)
 8. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
+9. [bitid(uri, silent)](#ledgerbitiduri-silent)
 
 ===
 
@@ -58,7 +65,10 @@ Ledger.isAppAvailable();
 If the Ledger Chrome app is not available, the returned `event` will be `undefined`. If it is available it will return the following `event.response`:
 
 ```json
-{"command":"ping","result":true}
+{  
+   "command":"ping",
+   "result":true
+}
 ```
 
 > All following API calls will return `undefined` if the Ledger Chrome app is not installed. In the next examples, it is taken for granted that the Chrome app is installed, and therefore we are not checking the existence of `event.response`.
@@ -83,7 +93,10 @@ Ledger.launchApp();
 It will always return the following response after having launched the app:
 
 ```json
-{"command":"launch","result":true}
+{  
+   "command":"launch",
+   "result":true
+}
 ```
 
 > You usually don't have to use this call, as it will be used by other calls automatically.
@@ -112,13 +125,19 @@ Ledger.hasSession();
 If session is ready:
 
 ```json
-{"command":"has_session","result":true}
+{  
+   "command":"has_session",
+   "result":true
+}
 ```
 
 If session is not ready:
 
 ```json
-{"command":"has_session","result":false}
+{  
+   "command":"has_session",
+   "result":false
+}
 ```
 
 > You normally don't need to use this call. All following API calls require the wallet to be ready. They will therefore automatically check that app has been launched and wait for the session to be ready by pooling the `hasSession()` call.
@@ -366,3 +385,42 @@ If user confirms the signature request:
 > Nothing is broadcasted on the Bitcoin network.
 
 > As it is a P2SH signature, the Ledger Nano won't ask for a second factor confirmation.
+
+===
+
+##### `Ledger.bitid(uri, silent)`
+
+Request a [BitID](https://github.com/bitid/bitid) login to `uri`. If `silent` is `true` then the Chrome app will not post the signature to the host (you'll have to do it yourself in your JS app).
+
+```javascript
+function callback(event) {
+  response = event.response;
+  if (response.command == "bitid") {
+    console.log(response);
+  }
+};
+Ledger.init({ callback: callback });
+Ledger.bitid('bitid://bitid.bitcoin.blue/callback?x=5f38d0fb45b25015&u=1');
+```
+
+If user cancels the authentication request:
+
+```json
+{  
+   "command":"bitid",
+   "success":false,
+   "message":"Authentication cancelled"
+}
+```
+
+If user confirms the authentication request:
+
+```json
+{  
+   "command":"bitid",
+   "success":true,
+   "address":"1M7gUz4NRLBty5WUuNQPNNG5GE2x5t6Wbp",
+   "signature":"H5/DFfbXP6tX9bNn/74l/HGC7jhInL5cKCFtLLUQ4nt6C1dB6hepuAlHSI5tG2TsLG6p6ox1qk1EUiMnFikDrEg=",
+   "uri":"bitid://bitid.bitcoin.blue/callback?x=5f38d0fb45b25015&u=1"
+}
+```
