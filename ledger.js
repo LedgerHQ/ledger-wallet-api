@@ -17,6 +17,12 @@ var Ledger = {
   bitid: function(uri, silent) {
     Ledger._messageAfterSession({ command:"bitid", uri:uri, silent:silent })
   },
+  getAccounts: function() {
+    Ledger._messageAfterSession({ command:"get_accounts" })
+  },
+  getOperations: function(account_id) {
+    Ledger._messageAfterSession({ command:"get_operations", account_id: account_id })
+  },
   sendPayment: function(address, amount) {
     Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
   },

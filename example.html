@@ -13,6 +13,11 @@
     <p>
     <input type="button" onclick="Ledger.sendPayment('19QM7ToSsi7N9zsZRdRTLcGZVspXQjQUY5',0.001)" value="Send payment">
     <p>
+    <input type="button" onclick="Ledger.getAccounts()" value="Get accounts list">
+    <p>
+    <input type="text" id="account" value="1">
+    <input type="button" onclick="Ledger.getOperations(document.getElementById('account').value)" value="Get operations for account ID">
+    <p>
     <input type="text" id="bitid">
     <input type="button" onclick="Ledger.bitid(document.getElementById('bitid').value)" value="BitID login">
     <p>
