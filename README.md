@@ -41,10 +41,11 @@ All calls are asynchronous, and you are not garanteed to get a callback (for ins
 3. [hasSession()](#ledgerhassession)
 4. [getAccounts()](#ledgergetaccounts)
 5. [getOperations(account_id)](#ledgergetoperationsaccount_id)
-6. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
-7. [getXPubKey(path)](#ledgergetxpubkeypath)
-8. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
-9. [bitid(uri, silent)](#ledgerbitiduri-silent)
+6. [getNewOperations(account_id, count)](#ledgergetaddressesaccount_id-count)
+7. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
+8. [getXPubKey(path)](#ledgergetxpubkeypath)
+9. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
+10. [bitid(uri, silent)](#ledgerbitiduri-silent)
 
 ===
 
@@ -201,7 +202,7 @@ Use the value of `id` for `account_id` in `getOperations`.
 
 ##### `Ledger.getOperations(account_id)`
 
-Request export of all operations (incoming and outgoing transactions) for an account.
+Request export of all operations (incoming and outgoing transactions) for account `account_id`.
 
 ```javascript
 function callback(event) {
@@ -223,6 +224,7 @@ If user cancels the request:
    "message":"Request cancelled by the user"
 }
 ```
+
 If user grants the request:
 
 ```json
@@ -247,8 +249,51 @@ If user grants the request:
          "id":81,
          "account_id":1
       },
-      ...
+      { }
    ]
+}
+```
+
+===
+
+##### `Ledger.getNewAddresses(account_id, count)`
+
+Request export of `count` new addresses for account `account_id`.
+
+```javascript
+function callback(event) {
+  response = event.response;
+  if (response.command == "get_new_addresses") {
+    console.log(response);
+  }
+};
+Ledger.init({ callback: callback });
+Ledger.getOperations(1,5);
+```
+
+If user cancels the request:
+
+```json
+{
+   "command":"get_new_addresses",
+   "success":false,
+   "message":"Request cancelled by the user"
+}
+```
+If user grants the request:
+
+```json
+{  
+  "command":"get_new_addresses",
+  "success":true,
+  "addresses":{  
+    "44'/0'/0'/0/36":"1633oRHv5jPwtZW2bASbS4geWKQd5ENR6F",
+    "44'/0'/0'/0/37":"1rvTbWuwEuwDCWbMCgqyKTWUK69jqNXwkv",
+    "44'/0'/0'/0/38":"1ewd4XZ8tbNSwGZ6e8fxNKdvFEwaQxVULn",
+    "44'/0'/0'/0/39":"1cTyUnyCFfXwShaVMZmL6uMpArEUrKnanj",
+    "44'/0'/0'/0/40":"185UpphCFnxowehNarFZnxp9FGFsLJsz6D"
+  },
+  "account_id":1
 }
 ```
 
@@ -432,9 +477,5 @@ If user confirms the authentication request:
 
 
 ## Roadmap
-
-We plan to add other API calls and new functionalities.
-
-- `Ledger.getNewAddresses(account_id, n)`: returns `n` new addresses for account `account_id` to receive payments
 
 If you would like to see other API calls for your specific needs, please open an issue with a description of what you would like and we'll discuss adding this functionality on our roadmap.

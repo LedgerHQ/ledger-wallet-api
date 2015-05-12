@@ -18,6 +18,10 @@
     <input type="text" id="account" value="1">
     <input type="button" onclick="Ledger.getOperations(document.getElementById('account').value)" value="Get operations for account ID">
     <p>
+    <input type="text" id="account_id" value="1">
+    <input type="text" id="count" value="5">
+    <input type="button" onclick="Ledger.getNewAddresses(document.getElementById('account_id').value,document.getElementById('count').value)" value="Get new addresses for account ID">
+    <p>
     <input type="text" id="bitid">
     <input type="button" onclick="Ledger.bitid(document.getElementById('bitid').value)" value="BitID login">
     <p>

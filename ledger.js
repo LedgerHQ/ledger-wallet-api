@@ -23,6 +23,9 @@ var Ledger = {
   getOperations: function(account_id) {
     Ledger._messageAfterSession({ command:"get_operations", account_id: account_id })
   },
+  getNewAddresses: function(account_id, count) {
+    Ledger._messageAfterSession({ command:"get_new_addresses", account_id: account_id, count: count })
+  },
   sendPayment: function(address, amount) {
     Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
   },
