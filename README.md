@@ -41,7 +41,7 @@ All calls are asynchronous, and you are not garanteed to get a callback (for ins
 3. [hasSession()](#ledgerhassession)
 4. [getAccounts()](#ledgergetaccounts)
 5. [getOperations(account_id)](#ledgergetoperationsaccount_id)
-6. [getNewOperations(account_id, count)](#ledgergetaddressesaccount_id-count)
+6. [getNewAddresses(account_id, count)](#ledgergetnewaddressesaccount_id-count)
 7. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
 8. [getXPubKey(path)](#ledgergetxpubkeypath)
 9. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
