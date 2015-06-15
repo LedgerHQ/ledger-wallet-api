@@ -382,7 +382,15 @@ If user confirms the export request:
 
 ##### `Ledger.signP2SH(inputs, scripts, outputs_number, outputs_script, paths)`
 
-Request the Ledger Nano to sign a multisignature transaction. The exemple below show the expected format of the arguments.
+Request the Ledger Nano to sign a multisignature transaction. 
+
+- `inputs` is an array of previous tx hash (human readable), input index (on 4 bytes, big endian encoded)
+- `scripts` is an array containing the redeem scripts
+- `outputs_number` is the number of outputs
+- `outputs_script` is the serialized output scripts
+- `paths` is an array containing the paths to the keys associated to each inputs
+
+The example below show the expected format of the arguments.
 
 ```javascript
 function callback(event) {
