@@ -182,17 +182,17 @@ If user grants the request:
       {
          "index":0,
          "name":"My account",
-         "id":1,
+         "hidden":false,
+         "color":"#FF5254",
          "wallet_id":1,
          "total_balance":0,
-         "unconfirmed_balance":0,
          "root_path":"44'/0'/0'"
       }
    ]
 }
 ```
 
-Use the value of `id` for `account_id` in `getOperations`.
+Use the value of `index` for `account_id` in `getOperations`.
 
 > All balances are in satoshis.
 
