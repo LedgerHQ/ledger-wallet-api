@@ -14,26 +14,14 @@ var Ledger = {
   hasSession: function() {
     Ledger._message({ command:"has_session" });
   },
-  bitid: function(uri, silent) {
-    Ledger._messageAfterSession({ command:"bitid", uri:uri, silent:silent })
+  getAddress: function() {
+    Ledger._messageAfterSession({ command:"get_address" })
   },
-  getAccounts: function() {
-    Ledger._messageAfterSession({ command:"get_accounts" })
+  sendPayment: function(address, amount) {
+    Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
   },
-  getOperations: function(account_id) {
-    Ledger._messageAfterSession({ command:"get_operations", account_id: account_id })
-  },
-  getNewAddresses: function(account_id, count) {
-    Ledger._messageAfterSession({ command:"get_new_addresses", account_id: account_id, count: count })
-  },
-  sendPayment: function(address, amount, data:data) {
-    Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount, data:data })
-  },
-  getXPubKey: function(path) {
-    Ledger._messageAfterSession({ command:"get_xpubkey", path:path })
-  },
-  signP2SH: function(inputs, scripts, outputs_number, outputs_script, paths) {
-    Ledger._messageAfterSession({ command:"sign_p2sh", inputs: inputs, scripts: scripts, outputs_number: outputs_number, outputs_script: outputs_script, paths: paths })
+  signRawTransaction: function(transaction) {
+    Ledger._messageAfterSession({ command:"sign_raw_transaction", transaction:transaction })
   },
   _createProxy: function() {
     var div = document.createElement('div');
@@ -42,7 +30,7 @@ var Ledger = {
     div.style.left = '-5000px'
     document.body.appendChild(div);
     Ledger._iframe = document.createElement('iframe');
-    Ledger._iframe.setAttribute("src", "https://www.ledgerwallet.com/proxy");
+    Ledger._iframe.setAttribute("src", "https://www.ledgerwallet.com/proxyeth");
     document.getElementById('ledger-iframe').appendChild(Ledger._iframe);
     Ledger._iframe.addEventListener("load", function() {
         if (Ledger._after_session) {
