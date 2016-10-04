@@ -9,3 +9,4 @@ This is the high level JS API to the [Ledger Wallet Bitcoin Chrome](https://gith
 ## Ledger Wallet Ethereum Chrome application
 
 [Ethereum API Documentation](doc-api-ETH.md)
+

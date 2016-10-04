@@ -40,7 +40,7 @@ All calls are asynchronous, and you are not garanteed to get a callback (for ins
 4. [getAccounts()](#ledgergetaccounts)
 5. [getOperations(account_id)](#ledgergetoperationsaccount_id)
 6. [getNewAddresses(account_id, count)](#ledgergetnewaddressesaccount_id-count)
-7. [sendPayment(address, amount)](#ledgersendpaymentaddress-amount)
+7. [sendPayment(address, amount, data)](#ledgersendpaymentaddress-amount-data)
 8. [getXPubKey(path)](#ledgergetxpubkeypath)
 9. [signP2SH(inputs, scripts, outputs_number, outputs_script, paths)](#ledgersignp2shinputs-scripts-outputs_number-outputs_script-paths)
 10. [bitid(uri, silent)](#ledgerbitiduri-silent)
@@ -297,9 +297,9 @@ If user grants the request:
 
 ===
 
-##### `Ledger.sendPayment(address, amount)`
+##### `Ledger.sendPayment(address, amount, data)`
 
-Request the Chrome app to send a payment of `amount` BTC to `address`.
+Request the Chrome app to send a payment of `amount` BTC to `address`. If data is set, an additional OP_RETURN output will be added with the data (must be hexadecimal format max 80 bytes).
 
 ```javascript
 function callback(event) {
