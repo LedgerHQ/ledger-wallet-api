@@ -26,8 +26,8 @@ var Ledger = {
   getNewAddresses: function(account_id, count) {
     Ledger._messageAfterSession({ command:"get_new_addresses", account_id: account_id, count: count })
   },
-  sendPayment: function(address, amount) {
-    Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount })
+  sendPayment: function(address, amount, data) {
+    Ledger._messageAfterSession({ command:"send_payment", address:address, amount:amount, data:data })
   },
   getXPubKey: function(path) {
     Ledger._messageAfterSession({ command:"get_xpubkey", path:path })
