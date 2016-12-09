@@ -32,6 +32,9 @@ var Ledger = {
   getXPubKey: function(path) {
     Ledger._messageAfterSession({ command:"get_xpubkey", path:path })
   },
+  signMessage: function(path, message) {
+    Ledger._messageAfterSession({ command:"sign_message", path:path, message:message })
+  },
   signP2SH: function(inputs, scripts, outputs_number, outputs_script, paths) {
     Ledger._messageAfterSession({ command:"sign_p2sh", inputs: inputs, scripts: scripts, outputs_number: outputs_number, outputs_script: outputs_script, paths: paths })
   },
