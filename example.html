@@ -28,6 +28,10 @@
     <input type="text" id="path">
     <input type="button" onclick="Ledger.getXPubKey(document.getElementById('path').value)" value="Get xpubkey">
     <p>
+    <input type="text" id="message_path">
+    <textarea id="message"></textarea>
+    <input type="button" onclick="Ledger.signMessage(document.getElementById('message_path').value, document.getElementById('message').value)" value="Sign message">
+    <p>
     <input type="button" onclick="p2sh()" value="Sign P2SH">
     <script>
       function callback(event) {
