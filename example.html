@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <script src="ledger.js"></script>
@@ -33,6 +34,13 @@
     <input type="button" onclick="Ledger.signMessage(document.getElementById('message_path').value, document.getElementById('message').value)" value="Sign message">
     <p>
     <input type="button" onclick="p2sh()" value="Sign P2SH">
+    <p>
+    <input type="text" id="address_id" value="19QM7ToSsi7N9zsZRdRTLcGZVspXQjQUY5">
+    <input type="text" id="amount_id" value="0.1">
+    <input type="text" id="data_id" value="3350e7ebcfbfb0660d7cfbfba8b3bfb49da1f32871b5be8597bbcbe3">
+    <input type="button" onclick="Ledger.sendPayment(document.getElementById('address_id').value,document.getElementById('amount_id').value,document.getElementById('data_id').value)" value="Send payment with data">
+    <p>
+
     <script>
       function callback(event) {
         document.getElementById("result").innerHTML = JSON.stringify(event.response);
